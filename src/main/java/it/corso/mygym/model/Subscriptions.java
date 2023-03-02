@@ -1,6 +1,8 @@
 package it.corso.mygym.model;
 
 
+import it.corso.mygym.model.enums.SubscriptionType;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Entity
 @Getter
@@ -33,9 +34,8 @@ public class Subscriptions implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column
-    // private enum type;
-
+    @Column
+    private SubscriptionType type;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotEmpty(message = "Questo campo è obbligatorio")
     @Column(nullable = false)
@@ -48,7 +48,10 @@ public class Subscriptions implements Serializable {
 
     @NotEmpty(message = "Questo campo è obbligatorio")
     @Column(nullable = false)
-    private int coast;
+    @DecimalMin("0.00")
+    private double price;
     @Column
     private boolean sold;
-}
+
+    }
+
