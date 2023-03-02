@@ -1,4 +1,4 @@
-package it.corso.mygym.model.dao;
+package it.corso.mygym.dao;
 
 import it.corso.mygym.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,10 +12,13 @@ public interface UserRepository extends JpaRepository <User, Long> {
 
     List<User> findByActivateTrue();
 
-
-    List<User> findByActivateTrueAndSubscriptionsActive();
-
-    // TODO: find by activeFlag=true AND have an active subscription --> @query
+    @Query(value = "SELECT u " +
+            "FROM User u, Subscriptions s " +
+            "WHERE u.activeFlag = true AND " +
+            "u.id = s.user.id AND s.endDate >= CURRENT_DATE " +
+            "GROUP BY u.id")
+    List<User> findByActivateTrueAndActiveSubscriptions();
 
     List<User> findByEmail(String Email);
+
 }

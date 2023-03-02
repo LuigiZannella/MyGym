@@ -1,16 +1,21 @@
 package it.corso.mygym.service;
 
 import it.corso.mygym.model.User;
+import it.corso.mygym.model.dto.UserDTO;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 public interface UserService {
 
-    User save (User user);
+    User save(UserDTO userDto);
 
-    User findByID (Long Id);
+    User findById(Long id);
 
-    User findAll(User user);
+    List<User> findAll(boolean includeInactiveFlag);
 
-    User update(Long id, User user);
+    User update(Long id, UserDTO userDto);
 
     User deleteById(Long id);
 }
