@@ -50,5 +50,5 @@ public class User implements Serializable {
     private boolean certificate;
 
     @Column
-    private boolean activate;
+    private boolean activate = true;
 }

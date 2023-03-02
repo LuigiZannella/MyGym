@@ -51,7 +51,7 @@ public class Subscriptions implements Serializable {
     @DecimalMin("0.00")
     private double price;
     @Column
-    private boolean sold;
+    private boolean sold = true;
 
-    }
+}
 
