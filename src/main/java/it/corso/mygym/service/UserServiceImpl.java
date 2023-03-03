@@ -47,6 +47,11 @@ public abstract class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAll() {
+            return repo.findAll();
+    }
+
+    @Override
     public User update(Long id, UserDTO userDto) {
         Optional<User> userOld = repo.findById(id);
         userDto.setId(id);

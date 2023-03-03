@@ -11,7 +11,7 @@ public interface SubscriptionsRepository extends JpaRepository <Subscriptions, L
 
     List<Subscriptions> findBySoldTrue();
 
-    List<Subscriptions> findByActivateTrueAndSoldTrue();
+    // List<Subscriptions> findByActivateTrueAndSoldTrue();
 
 
 }

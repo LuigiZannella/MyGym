@@ -12,13 +12,13 @@ public interface UserRepository extends JpaRepository <User, Long> {
 
     List<User> findByActivateTrue();
 
-    @Query(value = "SELECT u " +
+ /*   @Query(value = "SELECT u " +
             "FROM User u, Subscriptions s " +
             "WHERE u.activeFlag = true AND " +
             "u.id = s.user.id AND s.endDate >= CURRENT_DATE " +
             "GROUP BY u.id")
-    List<User> findByActivateTrueAndActiveSubscriptions();
+   List<User> findByActivateTrueAndActiveSubscriptions();
 
     List<User> findByEmail(String Email);
-
+*/
 }

@@ -15,6 +15,8 @@ public interface UserService {
 
     List<User> findAll(boolean includeInactiveFlag);
 
+    List<User> findAll();
+
     User update(Long id, UserDTO userDto);
 
     User deleteById(Long id);
