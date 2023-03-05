@@ -41,9 +41,8 @@ public class User implements Serializable {
     @Column(length = 50, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty(message = "Questo campo è obbligatorio")
     private LocalDate dob;
 
     @Column

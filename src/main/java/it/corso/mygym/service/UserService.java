@@ -2,22 +2,22 @@ package it.corso.mygym.service;
 
 import it.corso.mygym.model.User;
 import it.corso.mygym.model.dto.UserDTO;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public interface UserService {
 
-    User save(UserDTO userDto);
+    User save(UserDTO userDTO);
 
     User findById(Long id);
 
     List<User> findAll(boolean includeInactiveFlag);
 
-    List<User> findAll();
 
-    User update(Long id, UserDTO userDto);
+    User update(Long id, UserDTO userDTO);
 
     User deleteById(Long id);
 }

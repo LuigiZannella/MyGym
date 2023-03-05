@@ -1,8 +1,10 @@
 package it.corso.mygym.service;
 
+import it.corso.mygym.model.Constants;
 import it.corso.mygym.model.User;
 import it.corso.mygym.dao.UserRepository;
 import it.corso.mygym.model.dto.UserDTO;
+import it.corso.mygym.model.exception.UserNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -17,20 +19,25 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public abstract class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repo;
 
+    private void validateExists(Long id) {
+        if (repo.findById(id).isEmpty()) throw new UserNotFoundException(Constants.USER_NOT_FOUND_EXCEPTION, id);
+    }
+
     @Override
-    public User save(UserDTO userDto) {
+    public User save(UserDTO userDTO) {
         ModelMapper modelMapper = new ModelMapper();
-        User user = (modelMapper.map(userDto,User.class));
+        User user = (modelMapper.map(userDTO,User.class));
         return repo.save(user);
     }
 
     @Override
     public User findById(Long id) {
+        validateExists(id);
         Optional<User> optionalUser = repo.findById(id);
 
         if(optionalUser.isPresent()){
@@ -47,18 +54,13 @@ public abstract class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-            return repo.findAll();
-    }
-
-    @Override
-    public User update(Long id, UserDTO userDto) {
+    public User update(Long id, UserDTO userDTO) {
         Optional<User> userOld = repo.findById(id);
-        userDto.setId(id);
+        userDTO.setId(id);
 
         if(userOld.isPresent()){
-            copyNonNullProperties(userDto, userOld.get());
-            userDto.setId(id);
+            copyNonNullProperties(userDTO, userOld.get());
+            userDTO.setId(id);
 
             return repo.saveAndFlush(userOld.get());
         } else throw new ResourceNotFoundException();
@@ -73,10 +75,11 @@ public abstract class UserServiceImpl implements UserService {
 
             // hard-delete
             repo.deleteById(id);
+            return null;
 
             // soft-delete
-            //user.setActivate(false);
-            return repo.save(user);
+            // user.setActivate(false);
+            // return repo.save(user);
         } else throw new ResourceNotFoundException();
     }
 
